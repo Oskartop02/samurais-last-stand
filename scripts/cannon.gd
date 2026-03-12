@@ -1,0 +1,20 @@
+extends Node2D
+
+@export var shoot_interval = 1.2
+@onready var arrow = preload("res://characters/bolt.tscn")
+
+func _ready():
+	set_process(true)
+	timeout()  # Rozpocznij strzelanie
+
+func timeout():
+	shoot()
+	await get_tree().create_timer(shoot_interval).timeout
+	timeout()
+
+func shoot():
+	var instance = arrow.instantiate()
+	instance.direction = 1  # Strzelanie w dół
+	var spawn_offset = Vector2(0, 20)  # Pozycja pocisku poniżej wieżyczki
+	instance.global_position = global_position + spawn_offset
+	get_tree().get_current_scene().add_child(instance)

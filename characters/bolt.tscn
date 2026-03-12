@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://0vn8cu8sx78x"]
+
+[ext_resource type="Script" path="res://scripts/bolt.gd" id="1_jcvoq"]
+[ext_resource type="Texture2D" uid="uid://c5trqfsvvq7uw" path="res://animations/enemies/bolt.png" id="2_p5jbo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_or01j"]
+size = Vector2(67, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_swdg7"]
+size = Vector2(67, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nutxt"]
+atlas = ExtResource("2_p5jbo")
+region = Rect2(0, 0, 14, 5)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qeitd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nutxt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="bolt" type="CharacterBody2D"]
+rotation = -1.5708
+script = ExtResource("1_jcvoq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-35.5, -10)
+shape = SubResource("RectangleShape2D_or01j")
+
+[node name="shoot" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="shoot"]
+position = Vector2(-35.5, -10)
+shape = SubResource("RectangleShape2D_swdg7")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-36, -10)
+scale = Vector2(4.5, 4.5)
+sprite_frames = SubResource("SpriteFrames_qeitd")
