@@ -1,0 +1,83 @@
+[gd_scene load_steps=10 format=3 uid="uid://bvl8gbewxkgqg"]
+
+[ext_resource type="Texture2D" uid="uid://ptl7sphydrib" path="res://textures/level_0_background.png" id="1_sucn5"]
+[ext_resource type="PackedScene" uid="uid://bidpsxbq23a8j" path="res://characters/postac_testowa.tscn" id="2_l7umb"]
+[ext_resource type="AudioStream" uid="uid://banw6kqurw5md" path="res://sounds/Dash.wav" id="3_6la0o"]
+[ext_resource type="AudioStream" uid="uid://c3irmx44175vd" path="res://sounds/kick-hard-8-bit-103746.mp3" id="4_7qh0c"]
+[ext_resource type="AudioStream" uid="uid://hnccwdef0g6c" path="res://sounds/retro-hurt-1-236672.mp3" id="5_e0lqu"]
+[ext_resource type="AudioStream" uid="uid://bv26mqpy7pytp" path="res://sounds/retro-jump-1-236684.mp3" id="6_4blcu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l5g2m"]
+size = Vector2(1319.5, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_grewq"]
+size = Vector2(90, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ekj8n"]
+size = Vector2(66, 129)
+
+[node name="LevelZero" type="Node2D"]
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(-5956.85, 3193)
+scale = Vector2(11.645, 5.29)
+texture = ExtResource("1_sucn5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(982, 1416)
+scale = Vector2(2.3, 2.3)
+texture = ExtResource("1_sucn5")
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+position = Vector2(7000.71, 1440)
+scale = Vector2(9.95068, 2.3)
+texture = ExtResource("1_sucn5")
+
+[node name="platforma_testowa3" type="StaticBody2D" parent="."]
+position = Vector2(-614, 377)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="platforma_testowa3"]
+position = Vector2(1401, 274)
+shape = SubResource("RectangleShape2D_l5g2m")
+debug_color = Color(0.564706, 0.733333, 0.803922, 1)
+
+[node name="PostacTestowa" parent="." instance=ExtResource("2_l7umb")]
+position = Vector2(843, 582)
+
+[node name="Dash" type="AudioStreamPlayer" parent="PostacTestowa"]
+stream = ExtResource("3_6la0o")
+
+[node name="Kick-hard" type="AudioStreamPlayer" parent="PostacTestowa"]
+stream = ExtResource("4_7qh0c")
+volume_db = -10.0
+
+[node name="Retro-hurt" type="AudioStreamPlayer" parent="PostacTestowa"]
+stream = ExtResource("5_e0lqu")
+volume_db = -10.0
+
+[node name="Retro-jump" type="AudioStreamPlayer" parent="PostacTestowa"]
+stream = ExtResource("6_4blcu")
+volume_db = -10.0
+
+[node name="Area_postaci" type="Area2D" parent="PostacTestowa"]
+
+[node name="hitbox_postaci" type="CollisionShape2D" parent="PostacTestowa/Area_postaci"]
+position = Vector2(0, -64)
+shape = SubResource("RectangleShape2D_grewq")
+
+[node name="AttackArea" type="Area2D" parent="PostacTestowa"]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShapeLeft" type="CollisionShape2D" parent="PostacTestowa/AttackArea"]
+position = Vector2(-78, -64)
+shape = SubResource("RectangleShape2D_ekj8n")
+
+[node name="CollisionShapeRight" type="CollisionShape2D" parent="PostacTestowa/AttackArea"]
+position = Vector2(78, -64)
+shape = SubResource("RectangleShape2D_ekj8n")
+
+[node name="Sprite2D4" type="Sprite2D" parent="."]
+position = Vector2(4827.85, 10957.2)
+scale = Vector2(10.2179, 10.5018)
+texture = ExtResource("1_sucn5")

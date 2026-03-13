@@ -1,6 +1,6 @@
 extends Button
 # Define the path to your first scene (usually the main menu or initial gameplay scene)
-@export var first_scene_path = "res://scenes/scena_testowa.tscn"
+@export var first_scene_path = "res://scenes/level_zero.tscn"
 
 # Function that runs when the button is pressed
 func _ready():

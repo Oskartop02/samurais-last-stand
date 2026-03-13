@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://8cijbukc4jof"]
 
-[ext_resource type="Script" path="res://scripts/button2.gd" id="1_5yyt8"]
+[ext_resource type="Script" path="res://scripts/button.gd" id="1_o742v"]
 [ext_resource type="Texture2D" uid="uid://7fnmg784ll51" path="res://screens/MainMenu.png" id="2_0kbei"]
 [ext_resource type="Script" path="res://scripts/button_3.gd" id="2_utayt"]
 
@@ -11,8 +11,7 @@ offset_left = 65.0
 offset_top = 720.0
 offset_right = 353.0
 offset_bottom = 849.0
-script = ExtResource("1_5yyt8")
-first_scene_path = "res://scenes/scena_testowa.tscn"
+script = ExtResource("1_o742v")
 
 [node name="Button3" type="Button" parent="."]
 offset_left = 76.0
