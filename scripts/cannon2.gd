@@ -15,6 +15,6 @@ func timeout():
 func shoot():
 	var instance = arrow.instantiate()
 	instance.direction = 1  # Strzelanie w dół
-	var spawn_offset = Vector2(0, 20)  # Pozycja pocisku poniżej wieżyczki
+	var spawn_offset = Vector2(0, 120)  # Pozycja poniżej collidera działka
 	instance.global_position = global_position + spawn_offset
 	get_tree().get_current_scene().add_child(instance)

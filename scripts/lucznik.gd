@@ -8,6 +8,7 @@ extends CharacterBody2D
 
 var direction = -1
 var is_dead = false
+var _damage_flash_tween: Tween = null
 
 func _ready():
 	add_to_group("enemy")
@@ -41,11 +42,7 @@ func take_damage(damage: int) -> void:
 	print("Wróg otrzymał obrażenia:", damage)
 	health -= damage
 	if health > 0:
-		var hit_color = Color(1, 0, 0)
-		var original_color = modulate
-		var tweener = create_tween()
-		tweener.tween_property(self, "modulate", hit_color, 0.1)
-		tweener.tween_property(self, "modulate", original_color, 0.1).set_delay(0.1)
+		_play_damage_flash()
 	else:
 		die()
 
@@ -53,6 +50,10 @@ func take_damage(damage: int) -> void:
 func die() -> void:
 	pass
 	is_dead = true
+	if _damage_flash_tween:
+		_damage_flash_tween.kill()
+		_damage_flash_tween = null
+	modulate = Color(1, 1, 1, 1)
 	$AnimatedSprite2D.hide()
 	if direction == -1:
 		$AnimatedSprite2D2.show()
@@ -69,3 +70,10 @@ func die() -> void:
 
 func _on_death_animation_finished():
 	queue_free()
+
+func _play_damage_flash() -> void:
+	if _damage_flash_tween:
+		_damage_flash_tween.kill()
+	_damage_flash_tween = create_tween()
+	_damage_flash_tween.tween_property(self, "modulate", Color(1, 0, 0, 1), 0.06)
+	_damage_flash_tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.1)

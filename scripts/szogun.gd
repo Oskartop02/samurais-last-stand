@@ -5,6 +5,7 @@ extends CharacterBody2D
 @export var damage = 10  # Obrażenia zadawane przez przeciwnika
 var direction = -1
 var is_dead = false  # Flaga sprawdzająca, czy przeciwnik jest martwy
+var _damage_flash_tween: Tween = null
 
 func _ready():
 	# Ustaw domyślną animację
@@ -42,17 +43,17 @@ func update_animation():
 func take_damage(damage: int) -> void:
 	health -= damage
 	if health > 0: 
-		var hit_color = Color(1, 0, 0)  # Red color to indicate hit
-		var original_color = modulate  # Save the original color of the character
-		var tweener = create_tween()
-		tweener.tween_property(self, "modulate", hit_color, 0.1)  # Tween to hit color over 0.1 seconds
-		tweener.tween_property(self, "modulate", original_color, 0.1).set_delay(0.1)
+		_play_damage_flash()
 	if health <= 0:
 		die()
 
 # Funkcja do obsługi śmierci przeciwnika
 func die() -> void:
 	is_dead = true
+	if _damage_flash_tween:
+		_damage_flash_tween.kill()
+		_damage_flash_tween = null
+	modulate = Color(1, 1, 1, 1)
 	$AnimatedSprite2D.hide()
 	if direction == -1:
 		$AnimatedSprite2D2.show()
@@ -77,3 +78,10 @@ func _on_death_animation_finished():
 	elif current_scene == "res://scenes/scena_numer_dwa.tscn":
 		var next_scene_path = "res://scenes/to_be_continued.tscn"
 		get_tree().change_scene_to_file(next_scene_path)
+
+func _play_damage_flash() -> void:
+	if _damage_flash_tween:
+		_damage_flash_tween.kill()
+	_damage_flash_tween = create_tween()
+	_damage_flash_tween.tween_property(self, "modulate", Color(1, 0, 0, 1), 0.06)
+	_damage_flash_tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.1)

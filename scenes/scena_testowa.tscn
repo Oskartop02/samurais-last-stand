@@ -1,7 +1,7 @@
 [gd_scene load_steps=30 format=3 uid="uid://dxdwcta0a6scw"]
 
 [ext_resource type="PackedScene" uid="uid://qqyqmr3uclu0" path="res://characters/samurai.tscn" id="1_4cnu4"]
-[ext_resource type="Texture2D" uid="uid://8vh6o2wsoafq" path="res://textures/pixil-frame-0_56.png" id="1_81qx1"]
+[ext_resource type="Texture2D" uid="uid://d2m5kvnatqcvg" path="res://textures/level_1_background.png" id="1_70fre"]
 [ext_resource type="PackedScene" uid="uid://bidpsxbq23a8j" path="res://characters/postac_testowa.tscn" id="1_bbq1h"]
 [ext_resource type="AudioStream" uid="uid://c3irmx44175vd" path="res://sounds/kick-hard-8-bit-103746.mp3" id="2_4hhqg"]
 [ext_resource type="PackedScene" uid="uid://bcof8lnujcyxv" path="res://characters/wrog_testowy.tscn" id="2_8m7jl"]
@@ -11,7 +11,7 @@
 [ext_resource type="Script" path="res://scripts/orb.gd" id="4_l3jq4"]
 [ext_resource type="AudioStream" uid="uid://bv26mqpy7pytp" path="res://sounds/retro-jump-1-236684.mp3" id="4_vlq6s"]
 [ext_resource type="Texture2D" uid="uid://nnh4sptatn8f" path="res://animations/orbs/orb.png" id="4_xikt6"]
-[ext_resource type="Texture2D" uid="uid://beqo1cqsa76af" path="res://textures/platform.png" id="6_hqxa5"]
+[ext_resource type="Texture2D" uid="uid://cp0opmu60rtfa" path="res://textures/level_1_platform.png" id="8_gm6q6"]
 [ext_resource type="PackedScene" uid="uid://cubyjipeq01ce" path="res://characters/szogun.tscn" id="12_rp8i6"]
 [ext_resource type="Script" path="res://scripts/szogun.gd" id="13_ey07b"]
 
@@ -84,10 +84,21 @@ size = Vector2(12.125, 107.375)
 [node name="scena_testowa" type="Node2D"]
 position = Vector2(-9, -60)
 
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+position = Vector2(2070, 2464)
+rotation = 3.14159
+scale = Vector2(7.55332, 7.10952)
+texture = ExtResource("1_70fre")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(2864, -94)
-scale = Vector2(8.8501, 10.6321)
-texture = ExtResource("1_81qx1")
+position = Vector2(2686, -242)
+scale = Vector2(7.55332, 7.10952)
+texture = ExtResource("1_70fre")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(-1377.75, 1994)
+scale = Vector2(1.88086, 4.09456)
+texture = ExtResource("8_gm6q6")
 
 [node name="PostacTestowa" parent="." instance=ExtResource("1_bbq1h")]
 position = Vector2(-927, 40)
@@ -129,12 +140,11 @@ shape = SubResource("RectangleShape2D_2t4pd")
 position = Vector2(539, 569)
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="platforma_testowa"]
-modulate = Color(0.564706, 0.733333, 0.803922, 1)
-position = Vector2(12.0001, 491.159)
+position = Vector2(35, 1445)
 rotation = 3.14159
-scale = Vector2(1.152, 8.93496)
+scale = Vector2(1.152, 28)
 mesh = SubResource("QuadMesh_qri2w")
-texture = ExtResource("6_hqxa5")
+texture = ExtResource("8_gm6q6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="platforma_testowa"]
 position = Vector2(41, 94)
@@ -160,12 +170,11 @@ debug_color = Color(0.564706, 0.733333, 0.803922, 0)
 position = Vector2(1625, 247)
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="platforma_testowa2"]
-modulate = Color(0.564706, 0.733333, 0.803922, 1)
-position = Vector2(73, 748.159)
+position = Vector2(78, 1646)
 rotation = 3.14159
-scale = Vector2(1.15114, 10.3519)
+scale = Vector2(1.161, 28.3273)
 mesh = SubResource("QuadMesh_qri2w")
-texture = ExtResource("6_hqxa5")
+texture = ExtResource("8_gm6q6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="platforma_testowa2"]
 position = Vector2(72, 278)
@@ -176,12 +185,11 @@ debug_color = Color(0.564706, 0.733333, 0.803922, 1)
 position = Vector2(3151, 436)
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="platforma_testowa5"]
-modulate = Color(0.564706, 0.733333, 0.803922, 1)
-position = Vector2(140, 554.64)
+position = Vector2(140.002, 1519.13)
 rotation = 3.14159
-scale = Vector2(1.16236, 10.3189)
+scale = Vector2(1.16236, 29.6086)
 mesh = SubResource("QuadMesh_qri2w")
-texture = ExtResource("6_hqxa5")
+texture = ExtResource("8_gm6q6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="platforma_testowa5"]
 position = Vector2(134, 88)
@@ -224,12 +232,11 @@ debug_color = Color(0.564706, 0.733333, 0.803922, 0)
 position = Vector2(4301, 118)
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="platforma_testowa6"]
-modulate = Color(0.564706, 0.733333, 0.803922, 1)
-position = Vector2(133.994, 710.7)
+position = Vector2(133.996, 1679.61)
 rotation = 3.14159
-scale = Vector2(1.15035, 13.4401)
+scale = Vector2(1.15035, 32.8183)
 mesh = SubResource("QuadMesh_qri2w")
-texture = ExtResource("6_hqxa5")
+texture = ExtResource("8_gm6q6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="platforma_testowa6"]
 position = Vector2(134, 88)
@@ -240,12 +247,11 @@ debug_color = Color(0.564706, 0.733333, 0.803922, 1)
 position = Vector2(5463, 549)
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="platforma_testowa7"]
-modulate = Color(0.564706, 0.733333, 0.803922, 1)
-position = Vector2(350.619, 563.765)
+position = Vector2(351, 1524)
 rotation = 3.14159
-scale = Vector2(1.62678, 7.83165)
+scale = Vector2(1.62678, 27.2541)
 mesh = SubResource("QuadMesh_qri2w")
-texture = ExtResource("6_hqxa5")
+texture = ExtResource("8_gm6q6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="platforma_testowa7"]
 position = Vector2(121, 216)
@@ -261,12 +267,11 @@ debug_color = Color(0.564706, 0.733333, 0.803922, 1)
 position = Vector2(-614, 377)
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="platforma_testowa3"]
-modulate = Color(0.564706, 0.733333, 0.803922, 1)
-position = Vector2(46, 563.633)
+position = Vector2(46.0024, 1518.17)
 rotation = 3.14159
-scale = Vector2(1.152, 10.4927)
+scale = Vector2(1.152, 29.5834)
 mesh = SubResource("QuadMesh_qri2w")
-texture = ExtResource("6_hqxa5")
+texture = ExtResource("8_gm6q6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="platforma_testowa3"]
 position = Vector2(46.5, 89)
@@ -309,7 +314,7 @@ position = Vector2(-16, -120)
 shape = SubResource("RectangleShape2D_syw1l")
 
 [node name="orb" type="Area2D" parent="."]
-position = Vector2(3764, 505)
+position = Vector2(3783, 505)
 script = ExtResource("4_l3jq4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="orb"]
@@ -330,7 +335,7 @@ position = Vector2(2135, 882)
 shape = SubResource("RectangleShape2D_1yw4q")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-2284, -160)
+position = Vector2(-1474, 180)
 shape = SubResource("RectangleShape2D_cjpg4")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]

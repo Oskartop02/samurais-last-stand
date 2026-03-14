@@ -26,6 +26,7 @@ var is_first_attack = true
 var is_on_cooldown = false
 var can_deal_damage = false
 var can_deal_contact_damage = true
+var _damage_flash_tween: Tween = null
 
 enum State { IDLE, CHASE, ATTACK, COOLDOWN }
 var current_state = State.IDLE
@@ -211,15 +212,17 @@ func take_damage(damage_amount: int) -> void:
 	health -= damage_amount
 	print("[ROBOT] DMG! HP:", health, "/100 | stan:", State.keys()[current_state])
 	if health > 0:
-		var tweener = create_tween()
-		tweener.tween_property(self, "modulate", Color(1, 0, 0), 0.1)
-		tweener.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.1).set_delay(0.1)
+		_play_damage_flash()
 	if health <= 0:
 		die()
 
 func die() -> void:
 	print("[ROBOT] UMIERA dir=", direction)
 	is_dead = true
+	if _damage_flash_tween:
+		_damage_flash_tween.kill()
+		_damage_flash_tween = null
+	modulate = Color(1, 1, 1, 1)
 	can_deal_damage = false
 	current_state = State.IDLE
 	$DetectionArea.queue_free()
@@ -270,3 +273,10 @@ func _on_player_exited(body):
 		player_ref = null
 		if !is_attacking and !is_on_cooldown:
 			current_state = State.IDLE
+
+func _play_damage_flash() -> void:
+	if _damage_flash_tween:
+		_damage_flash_tween.kill()
+	_damage_flash_tween = create_tween()
+	_damage_flash_tween.tween_property(self, "modulate", Color(1, 0, 0, 1), 0.06)
+	_damage_flash_tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.1)

@@ -6,8 +6,9 @@ extends CharacterBody2D
 @export var dash_speed = 1000
 @export var dash_duration = 0.3
 @export var attack_damage = 10
-@export var zombie_damage = 10
+@export var zombie_damage = 0
 @export var samurai_damage = 0
+@export var lucznik_damage = 10
 @export var szogun_damage = 20  # Obrażenia zadawane przeciwnikom
 @export var assasin_damage = 50
 @export var robot_damage = 30
@@ -31,19 +32,41 @@ var is_attacking = false  # Flaga sprawdzająca, czy postać atakuje
 var attack_duration = 0.5  # Czas trwania ataku
 var facing_direction = "right"  # Kierunek, w którym patrzy postać
 var is_dead = false  # Flaga sprawdzająca, czy bohater jest martwy
+var _damage_flash_tween: Tween = null
+var _jump_snap_lock_time = 0.0
+var _was_on_moving_floor = false
+var _ignore_platform_velocity_time = 0.0
 
 func _ready():
 	# Debugging line in _ready
 	# Znajdź węzeł paska zdrowia w UI
 	# Podłączenie do obszaru ataku
 	floor_snap_length = 24.0
+	platform_on_leave = CharacterBody2D.PLATFORM_ON_LEAVE_DO_NOTHING
 	shoot()
+	_update_hud_layout()
+	if get_viewport() and !get_viewport().size_changed.is_connected(Callable(self, "_on_viewport_size_changed")):
+		get_viewport().size_changed.connect(Callable(self, "_on_viewport_size_changed"))
 	if not attack_area:
 		print("Error: AttackArea node not found!")
 	else:
 		attack_area.connect("body_entered", Callable(self, "_on_AttackArea_body_entered"))
 
 func _physics_process(delta):
+	if !is_on_floor() and _was_on_moving_floor:
+		_jump_snap_lock_time = max(_jump_snap_lock_time, 0.28)
+		_ignore_platform_velocity_time = 0.22
+		_was_on_moving_floor = false
+
+	if _ignore_platform_velocity_time > 0.0:
+		_ignore_platform_velocity_time -= delta
+
+	if _jump_snap_lock_time > 0.0:
+		_jump_snap_lock_time -= delta
+		floor_snap_length = 0.0
+	elif floor_snap_length != 24.0:
+		floor_snap_length = 24.0
+
 	# Jeśli bohater jest martwy, zatrzymaj dalsze przetwarzanie
 	if health == 50:
 		$Camera2D/HUD/AnimatedSprite2D.play("serce_5")
@@ -75,12 +98,13 @@ func _physics_process(delta):
 
 	# Apply gravity unless the character is on the floor
 	if !is_on_floor():
+		if _ignore_platform_velocity_time > 0.0 and velocity.y < 0.0:
+			velocity.y = min(velocity.y + 1200.0 * delta, 0.0)
 		velocity.y += gravity * delta
 		if velocity.y > 1000:
 			velocity.y = 1000
 	elif velocity.y > 0:
 		velocity.y = 0
-		apply_floor_snap()
 
 	# Handle dashing
 	if is_dashing:
@@ -120,10 +144,12 @@ func _physics_process(delta):
 				if is_on_floor():
 					$"Retro-jump".play()
 					velocity.y = -jump_force  # First jump
+					_jump_snap_lock_time = 0.18
 				elif can_double_jump and not has_double_jumped:
 					$"Retro-jump".play()
 					velocity.y = -jump_force  # Double jump
 					has_double_jumped = true  # Mark that double jump has been used
+					_jump_snap_lock_time = 0.18
 
 			# Horizontal movement
 			var horizontal_direction = Input.get_axis("move_left", "move_right")
@@ -163,6 +189,9 @@ func _physics_process(delta):
 
 	# Move character and apply velocity
 	move_and_slide()
+
+	if is_on_floor():
+		_was_on_moving_floor = get_platform_velocity().length() > 1.0
 
 # Start dash function
 func start_dash(direction):
@@ -266,13 +295,7 @@ func take_damage_p(damage: int) -> void:
 	if health <= 0:
 		die()
 		return
-	# Start the color flash effect using Tweener
-	var hit_color = Color(1, 0, 0)  # Red color to indicate hit
-	var original_color = modulate  # Save the original color of the character
-	# Create the Tweener instance and perform the transitions
-	var tweener = create_tween()
-	tweener.tween_property(self, "modulate", hit_color, 0.1)  # Tween to hit color over 0.1 seconds
-	tweener.tween_property(self, "modulate", original_color, 0.1).set_delay(0.1)  # Tween back to original color with a delay of 0.1 seconds
+	_play_damage_flash()
 
 	# Play a hit sound or other feedback
 	$"Retro-hurt".play()
@@ -281,6 +304,13 @@ func die() -> void:
 	if is_dead:
 		return
 	is_dead = true
+	var current_scene = get_tree().current_scene
+	if current_scene and current_scene.scene_file_path != "":
+		Pokoj.set_current_room(current_scene.scene_file_path)
+	if _damage_flash_tween:
+		_damage_flash_tween.kill()
+		_damage_flash_tween = null
+	modulate = Color(1, 1, 1, 1)
 	$Camera2D/HUD/AnimatedSprite2D.play("serce_0")
 	$"Retro-hurt".play()
 	print("Bohater umarł")
@@ -309,7 +339,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 
 func _on_hitbox_5_body_entered(body: Node2D) -> void:
 	if body.has_method("take_damage_p"):
-		body.take_damage_p(zombie_damage)
+		body.take_damage_p(lucznik_damage)
 		print(health)# Replace with function body.\
 
 
@@ -333,3 +363,38 @@ func _on_bosroom_body_entered(body: Node2D) -> void:
 		przenies_hud(3.0, Vector2(-1450, -1450))
 		# Start boss fight - wave system
 		GameControler.start_boss_fight()
+
+func _on_viewport_size_changed() -> void:
+	_update_hud_layout()
+
+func _update_hud_layout() -> void:
+	var hud = get_node_or_null("Camera2D/HUD")
+	if hud == null:
+		return
+	hud.position = Vector2.ZERO
+	hud.set_anchors_preset(Control.PRESET_TOP_LEFT)
+	hud.offset_left = 0.0
+	hud.offset_top = 0.0
+	hud.offset_right = 0.0
+	hud.offset_bottom = 0.0
+
+	var hp = get_node_or_null("Camera2D/HUD/AnimatedSprite2D")
+	if hp:
+		var view_size = get_viewport_rect().size
+		var zoom_factor = camera.zoom if camera else Vector2.ONE
+		var top_left = Vector2(-view_size.x * 0.5 * zoom_factor.x, -view_size.y * 0.5 * zoom_factor.y)
+		hp.position = top_left + Vector2(275.0, 70.0)
+
+	var kunai_ui = get_node_or_null("Camera2D/HUD/AnimatedSprite2D2")
+	if kunai_ui:
+		var view_size_2 = get_viewport_rect().size
+		var zoom_factor_2 = camera.zoom if camera else Vector2.ONE
+		var top_left_2 = Vector2(-view_size_2.x * 0.5 * zoom_factor_2.x, -view_size_2.y * 0.5 * zoom_factor_2.y)
+		kunai_ui.position = top_left_2 + Vector2(475.0, 78.0)
+
+func _play_damage_flash() -> void:
+	if _damage_flash_tween:
+		_damage_flash_tween.kill()
+	_damage_flash_tween = create_tween()
+	_damage_flash_tween.tween_property(self, "modulate", Color(1, 0, 0, 1), 0.06)
+	_damage_flash_tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.1)

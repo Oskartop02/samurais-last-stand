@@ -39,6 +39,7 @@ var scenes_loaded = false
 var spawn_complete = false
 var wave_spawn_time = 0.0  # Czas od zakończenia spawnu fali
 var WAVE_MIN_TIME = 1.5  # Min. czas po spawnie zanim fala może się skończyć
+var _fight_session_id = 0
 
 func on_enemy_died():
 	zniszczone += 1
@@ -57,11 +58,15 @@ func _load_enemy_scenes():
 	print("[WAVE] Sceny wrogów załadowane")
 
 func reset_waves():
+	_fight_session_id += 1
 	zniszczone = 0
 	current_wave = -1
 	wave_active = false
 	boss_fight_started = false
 	spawn_complete = false
+	for enemy in spawned_enemies:
+		if is_instance_valid(enemy):
+			enemy.queue_free()
 	spawned_enemies.clear()
 	enemies_alive = 0
 	wave_spawn_time = 0.0
@@ -69,6 +74,8 @@ func reset_waves():
 func start_boss_fight():
 	if boss_fight_started:
 		return
+	_fight_session_id += 1
+	var session_id = _fight_session_id
 	boss_fight_started = true
 	_load_enemy_scenes()
 	print("[WAVE] === BOSS FIGHT START ===")
@@ -76,9 +83,13 @@ func start_boss_fight():
 	if tree == null:
 		return
 	await tree.create_timer(2.0).timeout
-	start_next_wave()
+	if session_id != _fight_session_id or !boss_fight_started:
+		return
+	start_next_wave(session_id)
 
-func start_next_wave():
+func start_next_wave(session_id: int = _fight_session_id):
+	if session_id != _fight_session_id or !boss_fight_started:
+		return
 	current_wave += 1
 	if current_wave >= waves.size():
 		print("[WAVE] Wszystkie fale ukończone!")
@@ -97,6 +108,8 @@ func start_next_wave():
 		if tree == null:
 			return
 		await tree.create_timer(0.8).timeout
+		if session_id != _fight_session_id or !boss_fight_started:
+			return
 		spawn_enemy(wave_enemies[i])
 	
 	spawn_complete = true
@@ -171,6 +184,9 @@ func spawn_enemy(enemy_type: String):
 func _physics_process(delta):
 	if !wave_active or !spawn_complete:
 		return
+	var tree = Engine.get_main_loop() as SceneTree
+	if tree and tree.current_scene:
+		_update_bossroom_bounds(tree.current_scene)
 	
 	# Odliczaj czas od zakończenia spawnu
 	wave_spawn_time += delta
@@ -228,10 +244,29 @@ func wave_cleared():
 func on_generator_destroyed():
 	print("[WAVE] Generator zniszczony! Następna fala za 2s...")
 	if current_wave + 1 < waves.size():
+		var session_id = _fight_session_id
 		var tree = Engine.get_main_loop() as SceneTree
 		if tree == null:
 			return
 		await tree.create_timer(2.0).timeout
-		start_next_wave()
+		if session_id != _fight_session_id or !boss_fight_started:
+			return
+		start_next_wave(session_id)
 	else:
 		print("[WAVE] === WSZYSTKIE GENERATORY ZNISZCZONE! ===")
+
+func _update_bossroom_bounds(scene_root: Node) -> void:
+	var bossroom_area = scene_root.get_node_or_null("Bosroom")
+	if bossroom_area == null:
+		return
+	var cs = bossroom_area.get_node_or_null("CollisionShape2D")
+	if cs == null:
+		return
+	if !(cs.shape is RectangleShape2D):
+		return
+	var rect_shape = cs.shape as RectangleShape2D
+	var center_x = bossroom_area.position.x + cs.position.x
+	var half_width = rect_shape.size.x * 0.5
+	var margin = 40.0
+	bossroom_x_min = center_x - half_width + margin
+	bossroom_x_max = center_x + half_width - margin

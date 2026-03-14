@@ -9,7 +9,7 @@ func _ready():
 
 # Function to handle button press and go to the first scene
 func _on_restart_button_pressed():
-	if Pokoj.current_room_path == "start":
-		get_tree().change_scene_to_file(first_scene_path)
-	else:
-		get_tree().change_scene_to_file(Pokoj.current_room_path)
+	var retry_scene = Pokoj.get_retry_scene_path()
+	if retry_scene == "" or retry_scene == "start":
+		retry_scene = first_scene_path
+	get_tree().change_scene_to_file(retry_scene)

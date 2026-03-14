@@ -1,0 +1,5 @@
+res://scenes/main_menu.tscn
+res://scenes/scena_testowa.tscn
+res://scenes/scena_numer_dwa.tscn
+res://scripts/postac_testowa.gd
+res://scenes/scena_numer_trzy.tscn
