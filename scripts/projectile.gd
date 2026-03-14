@@ -16,11 +16,11 @@ func _ready():
 	rotation = spawnRot
 	
 	collision_layer = 0  # Pocisk nie ma fizycznej warstwy (nie przepycha ciał)
-	collision_mask = 1   # Pocisk koliduje fizycznie tylko ze ścianami (warstwa 1), nie z wrogami
+	collision_mask = 1   # Pocisk koliduje fizycznie tylko ze ścianami (warstwa 1)
 
 	# Sprawdzamy, czy Area2D jest prawidłowo przypisane
 	if not area:
-		print("Error: Area2D not found!")  # Debugging line to check for missing Area2D
+		print("Error: Area2D not found!")
 		return
 	
 	# Podłącz sygnał body_entered z węzła Area2D
@@ -36,16 +36,19 @@ func _physics_process(delta):
 	# Usuń pocisk, jeśli przekroczy maksymalny zasięg
 	if distance_travelled > MAX_RANGE:
 		queue_free()
-	if is_on_wall():
-		queue_free()
 
 # Funkcja wykrywająca kolizje
 func _on_body_entered(body: Node):
-	# Sprawdź, czy obiekt posiada metodę "take_damage"
+	# 1. Sprawdź, czy obiekt posiada metodę "take_damage" (przeciwnicy)
 	if body.has_method("take_damage"):
 		# Assasin przyjmuje drugi argument (death_type)
 		if body.get("player_in_range") != null:
 			body.take_damage(attack_damage, "kunai")
 		else:
 			body.take_damage(attack_damage)
-		queue_free()  # Zniszcz pocisk po trafieniu
+		queue_free()  # Zniszcz pocisk po trafieniu wroga
+		return # Przerywamy funkcję, żeby nie sprawdzać dalej
+
+	# 2. Sprawdź, czy trafiliśmy w podłoże/ściany (TileMap) LUB obiekt z grupy "boxy"
+	if body is TileMap or body.is_in_group("boxy"):
+		queue_free()  # Zniszcz pocisk, gdy trafi w przeszkodę

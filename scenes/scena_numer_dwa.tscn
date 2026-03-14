@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://c8svh48tdq2rb"]
+[gd_scene format=3 uid="uid://c8svh48tdq2rb"]
 
 [ext_resource type="Texture2D" uid="uid://b1sfuh7t4mhgx" path="res://textures/lvl2.png" id="1_d2lam"]
 [ext_resource type="PackedScene" uid="uid://bidpsxbq23a8j" path="res://characters/postac_testowa.tscn" id="2_6byjb"]
@@ -9,17 +9,17 @@
 [ext_resource type="Texture2D" uid="uid://dpn0ijiwg3tk6" path="res://animations/orbs/healup.png" id="9_2xw6i"]
 [ext_resource type="PackedScene" uid="uid://qqyqmr3uclu0" path="res://characters/samurai.tscn" id="10_r2ql3"]
 [ext_resource type="PackedScene" uid="uid://ddgeeew72qeav" path="res://characters/lucznik.tscn" id="11_cqtnt"]
-[ext_resource type="Script" path="res://scripts/winda.gd" id="11_evieq"]
+[ext_resource type="Script" uid="uid://b1kj2yjvyq28l" path="res://scripts/winda.gd" id="11_evieq"]
 [ext_resource type="Texture2D" uid="uid://buyisbmgef7pp" path="res://textures/box_skibidi.png" id="12_npxb7"]
 [ext_resource type="PackedScene" uid="uid://ooybyq3or2t2" path="res://characters/assasin.tscn" id="12_t5vhl"]
 [ext_resource type="Texture2D" uid="uid://b84or50oa8qwm" path="res://textures/platforma.png" id="12_yhdv4"]
-[ext_resource type="Script" path="res://scripts/orb_3.gd" id="13_5tymm"]
-[ext_resource type="Script" path="res://scripts/orb2.gd" id="13_ew1uw"]
+[ext_resource type="Script" uid="uid://cfkehvapn1hx5" path="res://scripts/orb_3.gd" id="13_5tymm"]
+[ext_resource type="Script" uid="uid://p11pmo3hysi3" path="res://scripts/orb2.gd" id="13_ew1uw"]
 [ext_resource type="Texture2D" uid="uid://htrulv0jvmsg" path="res://animations/orbs/orb2.png" id="14_0j8mx"]
 [ext_resource type="PackedScene" uid="uid://cda6n7gxi8cvc" path="res://characters/robot.tscn" id="15_mfmc1"]
-[ext_resource type="Script" path="res://scripts/orb.gd" id="16_qy0mn"]
+[ext_resource type="Script" uid="uid://cx2oiue4clqov" path="res://scripts/orb.gd" id="16_qy0mn"]
 [ext_resource type="Texture2D" uid="uid://nnh4sptatn8f" path="res://animations/orbs/orb.png" id="17_e5q0x"]
-[ext_resource type="Script" path="res://scenes/manager.gd" id="20_mip7j"]
+[ext_resource type="Script" uid="uid://gc8exaamy5xk" path="res://scenes/manager.gd" id="20_mip7j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tyd5f"]
 size = Vector2(90, 128)
@@ -134,6 +134,12 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qlop7"]
+size = Vector2(116, 633.0003)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_muts5"]
+size = Vector2(116, 641.0005)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5lhvv"]
 size = Vector2(172, 210)
 
@@ -179,469 +185,484 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="scena_testowa" type="Node2D"]
+[node name="scena_testowa" type="Node2D" unique_id=1485637423]
 position = Vector2(-9, -60)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1962831910]
 position = Vector2(2810, -1005)
 scale = Vector2(4.59131, 4.3112)
 texture = ExtResource("1_d2lam")
 
-[node name="PostacTestowa" parent="." instance=ExtResource("2_6byjb")]
+[node name="PostacTestowa" parent="." unique_id=3769272 instance=ExtResource("2_6byjb")]
 position = Vector2(-1476, -2415)
 
-[node name="Dash" type="AudioStreamPlayer" parent="PostacTestowa"]
+[node name="Dash" type="AudioStreamPlayer" parent="PostacTestowa" unique_id=1625272591]
 stream = ExtResource("3_b728w")
 
-[node name="Kick-hard" type="AudioStreamPlayer" parent="PostacTestowa"]
+[node name="Kick-hard" type="AudioStreamPlayer" parent="PostacTestowa" unique_id=1373045922]
 stream = ExtResource("4_b6whf")
 volume_db = -10.0
 
-[node name="Retro-hurt" type="AudioStreamPlayer" parent="PostacTestowa"]
+[node name="Retro-hurt" type="AudioStreamPlayer" parent="PostacTestowa" unique_id=73197405]
 stream = ExtResource("5_ay88y")
 volume_db = -10.0
 
-[node name="Retro-jump" type="AudioStreamPlayer" parent="PostacTestowa"]
+[node name="Retro-jump" type="AudioStreamPlayer" parent="PostacTestowa" unique_id=1596666316]
 stream = ExtResource("6_qgsni")
 volume_db = -10.0
 
-[node name="Area_postaci" type="Area2D" parent="PostacTestowa"]
+[node name="Area_postaci" type="Area2D" parent="PostacTestowa" unique_id=63212987]
 
-[node name="hitbox_postaci" type="CollisionShape2D" parent="PostacTestowa/Area_postaci"]
+[node name="hitbox_postaci" type="CollisionShape2D" parent="PostacTestowa/Area_postaci" unique_id=154703123]
 position = Vector2(0, -64)
 shape = SubResource("RectangleShape2D_tyd5f")
 
-[node name="AttackArea" type="Area2D" parent="PostacTestowa"]
+[node name="AttackArea" type="Area2D" parent="PostacTestowa" unique_id=223475308]
 collision_layer = 3
 collision_mask = 3
 
-[node name="CollisionShapeLeft" type="CollisionShape2D" parent="PostacTestowa/AttackArea"]
+[node name="CollisionShapeLeft" type="CollisionShape2D" parent="PostacTestowa/AttackArea" unique_id=2037402885]
 position = Vector2(-78, -64)
 shape = SubResource("RectangleShape2D_2t4pd")
 
-[node name="CollisionShapeRight" type="CollisionShape2D" parent="PostacTestowa/AttackArea"]
+[node name="CollisionShapeRight" type="CollisionShape2D" parent="PostacTestowa/AttackArea" unique_id=187360362]
 position = Vector2(78, -64)
 shape = SubResource("RectangleShape2D_2t4pd")
 
-[node name="platforma_testowa3" type="StaticBody2D" parent="."]
+[node name="platforma_testowa3" type="StaticBody2D" parent="." unique_id=2136109703]
 light_mask = 3
 visibility_layer = 3
 position = Vector2(-614, 377)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="platforma_testowa3"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="platforma_testowa3" unique_id=331460241]
 position = Vector2(6229, 682)
 shape = SubResource("RectangleShape2D_fuqjn")
 debug_color = Color(0.564706, 0.733333, 0.803922, 1)
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="platforma_testowa3"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="platforma_testowa3" unique_id=262133595]
 position = Vector2(-7976, -767)
 shape = SubResource("RectangleShape2D_fuqjn")
 debug_color = Color(0.564706, 0.733333, 0.803922, 1)
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="platforma_testowa3"]
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="platforma_testowa3" unique_id=356206154]
 position = Vector2(14452, -883)
 shape = SubResource("RectangleShape2D_fuqjn")
 debug_color = Color(0.564706, 0.733333, 0.803922, 1)
 
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="platforma_testowa3"]
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="platforma_testowa3" unique_id=1730863911]
 position = Vector2(-7980, 1410)
 shape = SubResource("RectangleShape2D_fuqjn")
 debug_color = Color(0.564706, 0.733333, 0.803922, 1)
 
-[node name="CollisionShape2D5" type="CollisionShape2D" parent="platforma_testowa3"]
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="platforma_testowa3" unique_id=888633402]
 position = Vector2(6222, 2456)
 shape = SubResource("RectangleShape2D_fuqjn")
 debug_color = Color(0.564706, 0.733333, 0.803922, 1)
 
-[node name="CollisionShape2D6" type="CollisionShape2D" parent="platforma_testowa3"]
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="platforma_testowa3" unique_id=1030269785]
 position = Vector2(6231, -2116)
 shape = SubResource("RectangleShape2D_fuqjn")
 debug_color = Color(0.564706, 0.733333, 0.803922, 1)
 
-[node name="CollisionShape2D7" type="CollisionShape2D" parent="platforma_testowa3"]
+[node name="CollisionShape2D7" type="CollisionShape2D" parent="platforma_testowa3" unique_id=1025155381]
 position = Vector2(-7976, -2570)
 shape = SubResource("RectangleShape2D_fuqjn")
 debug_color = Color(0.564706, 0.733333, 0.803922, 1)
 
-[node name="Samurai" parent="." instance=ExtResource("10_r2ql3")]
+[node name="Samurai" parent="." unique_id=1417658051 instance=ExtResource("10_r2ql3")]
 position = Vector2(1495, 20)
 collision_layer = 2
 collision_mask = 2
 
-[node name="hitbox3" type="Area2D" parent="Samurai"]
+[node name="hitbox3" type="Area2D" parent="Samurai" unique_id=1578955901]
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Samurai/hitbox3"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Samurai/hitbox3" unique_id=1450389120]
 position = Vector2(-16, -120)
 shape = SubResource("RectangleShape2D_syw1l")
 
-[node name="orb2" type="Area2D" parent="."]
+[node name="orb2" type="Area2D" parent="." unique_id=1140373242]
 position = Vector2(5816, -117)
 script = ExtResource("13_ew1uw")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="orb2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="orb2" unique_id=65900440]
 position = Vector2(-188, -59)
 shape = SubResource("RectangleShape2D_ldlj1")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="orb2"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="orb2" unique_id=289625029]
 position = Vector2(-188, -62.5)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_cpa10")
 animation = &"orb2"
 autoplay = "orb2"
 
-[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+[node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=836587273 groups=["boxy"]]
 position = Vector2(-23, -101)
 rotation = -0.261799
 collision_layer = 3
 collision_mask = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2" unique_id=1209895659]
 light_mask = 3
 visibility_layer = 3
 position = Vector2(299.418, 95.7579)
 rotation = -2.87979
 shape = SubResource("RectangleShape2D_3vjnh")
 
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D2"]
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D2" unique_id=533817028]
 position = Vector2(300.195, 92.8602)
 rotation = 0.261799
 scale = Vector2(3.32825, 3.20781)
 texture = ExtResource("12_npxb7")
 
-[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+[node name="StaticBody2D3" type="StaticBody2D" parent="." unique_id=895014001 groups=["boxy"]]
 position = Vector2(1343, -101)
 rotation = -0.261799
 collision_layer = 3
 collision_mask = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3" unique_id=1496477897]
 light_mask = 3
 visibility_layer = 3
 position = Vector2(299.418, 95.7579)
 rotation = -2.87979
 shape = SubResource("RectangleShape2D_3vjnh")
 
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D3"]
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D3" unique_id=1730977937]
 position = Vector2(300.195, 92.8602)
 rotation = 0.261799
 scale = Vector2(3.32825, 3.20781)
 texture = ExtResource("12_npxb7")
 
-[node name="Samurai2" parent="." instance=ExtResource("10_r2ql3")]
+[node name="Samurai2" parent="." unique_id=759234788 instance=ExtResource("10_r2ql3")]
 position = Vector2(546, 20)
 collision_layer = 2
 collision_mask = 2
 
-[node name="hitbox3" type="Area2D" parent="Samurai2"]
+[node name="hitbox3" type="Area2D" parent="Samurai2" unique_id=1922592996]
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Samurai2/hitbox3"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Samurai2/hitbox3" unique_id=392296127]
 position = Vector2(-16, -120)
 shape = SubResource("RectangleShape2D_syw1l")
 
-[node name="StaticBody2D4" type="StaticBody2D" parent="."]
+[node name="StaticBody2D4" type="StaticBody2D" parent="." unique_id=1284677533 groups=["boxy"]]
 position = Vector2(3111, -101)
 rotation = -0.261799
 collision_layer = 3
 collision_mask = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4" unique_id=2059196808]
 light_mask = 3
 visibility_layer = 3
 position = Vector2(299.418, 95.7579)
 rotation = -2.87979
 shape = SubResource("RectangleShape2D_3vjnh")
 
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D4"]
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D4" unique_id=1716563551]
 position = Vector2(300.195, 92.8602)
 rotation = 0.261799
 scale = Vector2(3.32825, 3.20781)
 texture = ExtResource("12_npxb7")
 
-[node name="StaticBody2D5" type="StaticBody2D" parent="."]
+[node name="StaticBody2D5" type="StaticBody2D" parent="." unique_id=444617408 groups=["boxy"]]
 position = Vector2(2167, -102)
 rotation = -0.261799
 collision_layer = 3
 collision_mask = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D5"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D5" unique_id=386805565]
 light_mask = 3
 visibility_layer = 3
 position = Vector2(299.418, 95.7579)
 rotation = -2.87979
 shape = SubResource("RectangleShape2D_3vjnh")
 
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D5"]
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D5" unique_id=1580630571]
 position = Vector2(300.195, 92.8602)
 rotation = 0.261799
 scale = Vector2(3.32825, 3.20781)
 texture = ExtResource("12_npxb7")
 
-[node name="StaticBody2D6" type="StaticBody2D" parent="."]
+[node name="StaticBody2D6" type="StaticBody2D" parent="." unique_id=1572348923 groups=["boxy"]]
 position = Vector2(5373, -101)
 rotation = -0.261799
 collision_layer = 3
 collision_mask = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D6"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D6" unique_id=1932632828]
 light_mask = 3
 visibility_layer = 3
 position = Vector2(299.418, 95.7579)
 rotation = -2.87979
 shape = SubResource("RectangleShape2D_3vjnh")
 
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D6"]
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D6" unique_id=39865961]
 position = Vector2(300.195, 92.8602)
 rotation = 0.261799
 scale = Vector2(3.32825, 3.20781)
 texture = ExtResource("12_npxb7")
 
-[node name="StaticBody2D7" type="StaticBody2D" parent="."]
+[node name="StaticBody2D7" type="StaticBody2D" parent="." unique_id=1165645122 groups=["boxy"]]
 position = Vector2(4099, -101)
 rotation = -0.261799
 collision_layer = 3
 collision_mask = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D7"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D7" unique_id=1282826824]
 light_mask = 3
 visibility_layer = 3
 position = Vector2(299.418, 95.7579)
 rotation = -2.87979
 shape = SubResource("RectangleShape2D_3vjnh")
 
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D7"]
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D7" unique_id=1260804760]
 position = Vector2(300.195, 92.8602)
 rotation = 0.261799
 scale = Vector2(3.32825, 3.20781)
 texture = ExtResource("12_npxb7")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=2021052173]
 position = Vector2(22, -3926)
 script = ExtResource("11_evieq")
 
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=1669747695]
 position = Vector2(-1497.5, 2159)
 scale = Vector2(10.4531, 6.94792)
 texture = ExtResource("12_yhdv4")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1636236149]
 visible = false
 position = Vector2(2835, 2606)
 shape = SubResource("RectangleShape2D_fuqjn")
 debug_color = Color(0.564706, 0.733333, 0.803922, 1)
 
-[node name="Samurai3" parent="." instance=ExtResource("10_r2ql3")]
+[node name="Samurai3" parent="." unique_id=1018527049 instance=ExtResource("10_r2ql3")]
 position = Vector2(3937, 20)
 collision_layer = 2
 collision_mask = 2
 
-[node name="hitbox3" type="Area2D" parent="Samurai3"]
+[node name="hitbox3" type="Area2D" parent="Samurai3" unique_id=741706151]
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Samurai3/hitbox3"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Samurai3/hitbox3" unique_id=1608249074]
 position = Vector2(-16, -120)
 shape = SubResource("RectangleShape2D_syw1l")
 
-[node name="StaticBody2D8" type="StaticBody2D" parent="."]
+[node name="StaticBody2D8" type="StaticBody2D" parent="." unique_id=754086043]
 position = Vector2(5257, -101)
 rotation = -0.261799
 collision_layer = 3
 collision_mask = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D8"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D8" unique_id=590975061]
 light_mask = 3
 visibility_layer = 3
 position = Vector2(299.418, 95.7578)
 rotation = -2.87979
 shape = SubResource("RectangleShape2D_3vjnh")
 
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D8"]
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D8" unique_id=729004254]
 position = Vector2(300.195, 92.8602)
 rotation = 0.261799
 scale = Vector2(3.32825, 3.20781)
 texture = ExtResource("12_npxb7")
 
-[node name="StaticBody2D9" type="StaticBody2D" parent="."]
+[node name="StaticBody2D9" type="StaticBody2D" parent="." unique_id=1692593967]
 position = Vector2(5141, -101)
 rotation = -0.261799
 collision_layer = 3
 collision_mask = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D9"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D9" unique_id=553292855]
 light_mask = 3
 visibility_layer = 3
 position = Vector2(299.418, 95.7579)
 rotation = -2.87979
 shape = SubResource("RectangleShape2D_3vjnh")
 
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D9"]
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D9" unique_id=803443173]
 position = Vector2(300.195, 92.8602)
 rotation = 0.261799
 scale = Vector2(3.32825, 3.20781)
 texture = ExtResource("12_npxb7")
 
-[node name="Lucznik" parent="." instance=ExtResource("11_cqtnt")]
+[node name="Lucznik" parent="." unique_id=165895636 instance=ExtResource("11_cqtnt")]
 position = Vector2(2533, -159)
 collision_layer = 2
 collision_mask = 2
 
-[node name="hitbox5" type="Area2D" parent="Lucznik"]
+[node name="hitbox5" type="Area2D" parent="Lucznik" unique_id=1696394606]
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Lucznik/hitbox5"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Lucznik/hitbox5" unique_id=615234352]
 light_mask = 2
 visibility_layer = 2
 position = Vector2(-50.5, -34)
 shape = SubResource("RectangleShape2D_o0t2r")
 
-[node name="Lucznik2" parent="." instance=ExtResource("11_cqtnt")]
+[node name="Lucznik2" parent="." unique_id=2144554436 instance=ExtResource("11_cqtnt")]
 position = Vector2(5381, -158)
 collision_layer = 2
 collision_mask = 2
 
-[node name="hitbox5" type="Area2D" parent="Lucznik2"]
+[node name="hitbox5" type="Area2D" parent="Lucznik2" unique_id=540956869]
 collision_layer = 3
 collision_mask = 3
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Lucznik2/hitbox5"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Lucznik2/hitbox5" unique_id=1826361528]
 position = Vector2(-50.5, -34)
 shape = SubResource("RectangleShape2D_o0t2r")
 
-[node name="Lucznik3" parent="." instance=ExtResource("11_cqtnt")]
+[node name="Lucznik3" parent="." unique_id=971990345 instance=ExtResource("11_cqtnt")]
 position = Vector2(4469, -158)
 collision_layer = 2
 collision_mask = 2
 
-[node name="hitbox5" type="Area2D" parent="Lucznik3"]
+[node name="hitbox5" type="Area2D" parent="Lucznik3" unique_id=1367626911]
 collision_layer = 3
 collision_mask = 3
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Lucznik3/hitbox5"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Lucznik3/hitbox5" unique_id=326537333]
 position = Vector2(-50.5, -34)
 shape = SubResource("RectangleShape2D_o0t2r")
 
-[node name="assasin" parent="." instance=ExtResource("12_t5vhl")]
+[node name="assasin" parent="." unique_id=727949260 instance=ExtResource("12_t5vhl")]
 position = Vector2(5173, 22)
 
-[node name="hitbox6" type="Area2D" parent="assasin"]
+[node name="hitbox6" type="Area2D" parent="assasin" unique_id=812531921]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="assasin/hitbox6"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="assasin/hitbox6" unique_id=202255518]
 position = Vector2(-13, -119)
 shape = SubResource("RectangleShape2D_bpn2e")
 
-[node name="DetectionArea" type="Area2D" parent="assasin"]
+[node name="DetectionArea" type="Area2D" parent="assasin" unique_id=1236262353]
 position = Vector2(130, -10)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="assasin/DetectionArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="assasin/DetectionArea" unique_id=1945936883]
 position = Vector2(-270, -70)
 shape = SubResource("RectangleShape2D_ogv1g")
 
-[node name="assasin2" parent="." instance=ExtResource("12_t5vhl")]
+[node name="assasin2" parent="." unique_id=1166714109 instance=ExtResource("12_t5vhl")]
 position = Vector2(3280, 25)
 
-[node name="hitbox6" type="Area2D" parent="assasin2"]
+[node name="hitbox6" type="Area2D" parent="assasin2" unique_id=273507092]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="assasin2/hitbox6"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="assasin2/hitbox6" unique_id=2124954527]
 position = Vector2(-13, -119.5)
 shape = SubResource("RectangleShape2D_bpn2e")
 
-[node name="DetectionArea" type="Area2D" parent="assasin2"]
+[node name="DetectionArea" type="Area2D" parent="assasin2" unique_id=1616268466]
 position = Vector2(130, -10)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="assasin2/DetectionArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="assasin2/DetectionArea" unique_id=1353682622]
 position = Vector2(-270, -78)
 shape = SubResource("RectangleShape2D_ogv1g")
 
-[node name="StaticBody2D10" type="StaticBody2D" parent="."]
+[node name="StaticBody2D10" type="StaticBody2D" parent="." unique_id=1576790597 groups=["boxy"]]
 position = Vector2(5025, -101)
 rotation = -0.261799
 collision_layer = 3
 collision_mask = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D10"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D10" unique_id=1876390973]
 light_mask = 3
 visibility_layer = 3
 position = Vector2(299.418, 95.7579)
 rotation = -2.87979
 shape = SubResource("RectangleShape2D_3vjnh")
 
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D10"]
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D10" unique_id=344281197]
 position = Vector2(300.195, 92.8602)
 rotation = 0.261799
 scale = Vector2(3.32825, 3.20781)
 texture = ExtResource("12_npxb7")
 
-[node name="orb3" type="Area2D" parent="."]
+[node name="orb3" type="Area2D" parent="." unique_id=1887721084]
 position = Vector2(3909, -180)
 script = ExtResource("13_5tymm")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="orb3"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="orb3" unique_id=479119869]
 position = Vector2(-3888, 90)
 shape = SubResource("RectangleShape2D_ldlj1")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="orb3"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="orb3" unique_id=957576737]
 position = Vector2(-3887.5, 91)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_ntmmc")
 autoplay = "default"
 
-[node name="StaticBody2D11" type="StaticBody2D" parent="."]
+[node name="StaticBody2D11" type="StaticBody2D" parent="." unique_id=1601686181 groups=["boxy"]]
 position = Vector2(6703, -104)
 rotation = -0.261799
 collision_layer = 3
 collision_mask = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D11"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D11" unique_id=399505946]
 light_mask = 3
 visibility_layer = 3
-position = Vector2(397.147, 140.579)
+position = Vector2(-8244.865, -2442.1392)
 rotation = -2.87979
-shape = SubResource("RectangleShape2D_3vjnh")
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_qlop7")
 
-[node name="Robot" parent="." instance=ExtResource("15_mfmc1")]
+[node name="StaticBody2D12" type="StaticBody2D" parent="." unique_id=853918174 groups=["boxy"]]
+position = Vector2(6703, -104)
+rotation = -0.261799
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D12" unique_id=449019138]
+light_mask = 3
+visibility_layer = 3
+position = Vector2(465.60547, -114.907715)
+rotation = -2.87979
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_muts5")
+
+[node name="Robot" parent="." unique_id=1772645968 instance=ExtResource("15_mfmc1")]
 position = Vector2(6383, -112)
 collision_layer = 2
 collision_mask = 2
 
-[node name="hitbox7" type="Area2D" parent="Robot"]
+[node name="hitbox7" type="Area2D" parent="Robot" unique_id=28727798]
 collision_layer = 3
 collision_mask = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Robot/hitbox7"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Robot/hitbox7" unique_id=192775910]
 position = Vector2(-72, -28)
 shape = SubResource("RectangleShape2D_5lhvv")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Robot/hitbox7"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Robot/hitbox7" unique_id=562040177]
 position = Vector2(-69.5, 7)
 shape = SubResource("RectangleShape2D_pt8xy")
 
-[node name="orb" type="Area2D" parent="."]
+[node name="orb" type="Area2D" parent="." unique_id=979659432]
 position = Vector2(5646, -111)
 script = ExtResource("16_qy0mn")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="orb"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="orb" unique_id=1744812034]
 position = Vector2(-188, -63)
 shape = SubResource("RectangleShape2D_mc2ck")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="orb"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="orb" unique_id=281819686]
 position = Vector2(-188, -65)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_8lh5c")
 animation = &"orb"
 autoplay = "orb"
 
-[node name="orb4" type="Area2D" parent="."]
+[node name="orb4" type="Area2D" parent="." unique_id=1015049536]
 position = Vector2(9433, -265)
 script = ExtResource("13_5tymm")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="orb4"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="orb4" unique_id=1886249544]
 position = Vector2(-3888, 90)
 shape = SubResource("RectangleShape2D_ldlj1")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="orb4"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="orb4" unique_id=1301496598]
 position = Vector2(-3887.5, 91)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_ntmmc")
 autoplay = "default"
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="Node2D" type="Node2D" parent="." unique_id=1308969006]
 script = ExtResource("20_mip7j")
 
 [connection signal="body_entered" from="Samurai/hitbox3" to="PostacTestowa" method="_on_hitbox_3_body_entered"]

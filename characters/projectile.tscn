@@ -1,6 +1,6 @@
-[gd_scene load_steps=15 format=3 uid="uid://xlsfbhhdpr11"]
+[gd_scene format=3 uid="uid://xlsfbhhdpr11"]
 
-[ext_resource type="Script" path="res://scripts/projectile.gd" id="1_y58aq"]
+[ext_resource type="Script" uid="uid://cjwht8nsbicbi" path="res://scripts/projectile.gd" id="1_y58aq"]
 [ext_resource type="Texture2D" uid="uid://dj3j3fcx3yoak" path="res://animations/knifeThrow.png" id="2_upng2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fvh65"]
@@ -80,10 +80,10 @@ size = Vector2(171, 119)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2rnxm"]
 size = Vector2(172.5, 118.5)
 
-[node name="projectile" type="CharacterBody2D"]
+[node name="projectile" type="CharacterBody2D" unique_id=1917593507]
 script = ExtResource("1_y58aq")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1559475645]
 position = Vector2(-5.96046e-08, -1.19209e-07)
 rotation = 3.13906
 scale = Vector2(6.91674, 4.87896)
@@ -91,14 +91,16 @@ sprite_frames = SubResource("SpriteFrames_guf3v")
 autoplay = "default"
 frame_progress = 0.124834
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1969134318]
 position = Vector2(9.5, -0.5)
 shape = SubResource("RectangleShape2D_qhd5p")
 
-[node name="shoot" type="Area2D" parent="."]
+[node name="shoot" type="Area2D" parent="." unique_id=2138724700]
 collision_layer = 3
 collision_mask = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="shoot"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="shoot" unique_id=425792473]
 position = Vector2(9, -1)
 shape = SubResource("RectangleShape2D_2rnxm")
+
+[connection signal="body_entered" from="shoot" to="." method="_on_shoot_body_entered"]
