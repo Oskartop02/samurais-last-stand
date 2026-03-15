@@ -25,6 +25,7 @@ var generator_names = ["generator", "generator3", "generator4", "generator2"]
 var spawn_x_min = 6200.0  # Wewnątrz bossroomu (za pierwszym generatorem)
 var spawn_x_max = 8400.0  # Wewnątrz bossroomu (przed ostatnim generatorem)
 var spawn_y = 1818.0  # Pozycja podłogi bossroomu (taka jak istniejące zombie)
+var enemy_spawn_min_player_distance = 700.0
 
 # Granice bossroomu - wrogowie nie mogą wyjść poza ten zakres
 var bossroom_x_min = 5400.0
@@ -158,7 +159,7 @@ func spawn_enemy(enemy_type: String):
 		return
 	
 	var enemy = enemy_scenes[enemy_type].instantiate()
-	var spawn_x = randf_range(spawn_x_min, spawn_x_max)
+	var spawn_x = _get_spawn_x_with_player_distance(scene_root, enemy_type)
 	var floor_y = _get_spawn_floor_y(scene_root)
 	enemy.position = Vector2(spawn_x, floor_y)
 	
@@ -180,6 +181,39 @@ func spawn_enemy(enemy_type: String):
 	spawned_enemies.append(enemy)
 	
 	print("[WAVE] Spawn: ", enemy_type, " X=", snapped(spawn_x, 1), " Y=", floor_y, " | żywi: ", enemies_alive)
+
+func _get_spawn_x_with_player_distance(scene_root: Node, enemy_type: String) -> float:
+	var player = scene_root.get_node_or_null("PostacTestowa")
+	if player == null or !(player is Node2D):
+		return randf_range(spawn_x_min, spawn_x_max)
+
+	var player_x = (player as Node2D).position.x
+	var forbidden_min = player_x - enemy_spawn_min_player_distance
+	var forbidden_max = player_x + enemy_spawn_min_player_distance
+
+	var left_min = spawn_x_min
+	var left_max = min(spawn_x_max, forbidden_min)
+	var right_min = max(spawn_x_min, forbidden_max)
+	var right_max = spawn_x_max
+
+	var left_width = max(0.0, left_max - left_min)
+	var right_width = max(0.0, right_max - right_min)
+
+	if left_width > 0.0 and right_width > 0.0:
+		var total_width = left_width + right_width
+		if randf() < left_width / total_width:
+			return randf_range(left_min, left_max)
+		return randf_range(right_min, right_max)
+	if left_width > 0.0:
+		return randf_range(left_min, left_max)
+	if right_width > 0.0:
+		return randf_range(right_min, right_max)
+
+	var left_x = spawn_x_min
+	var right_x = spawn_x_max
+	if abs(left_x - player_x) > abs(right_x - player_x):
+		return left_x
+	return right_x
 
 func _physics_process(delta):
 	if !wave_active or !spawn_complete:

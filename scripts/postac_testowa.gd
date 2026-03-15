@@ -383,14 +383,14 @@ func _update_hud_layout() -> void:
 		var view_size = get_viewport_rect().size
 		var zoom_factor = camera.zoom if camera else Vector2.ONE
 		var top_left = Vector2(-view_size.x * 0.5 * zoom_factor.x, -view_size.y * 0.5 * zoom_factor.y)
-		hp.position = top_left + Vector2(275.0, 70.0)
+		hp.position = top_left + Vector2(260.0, 65.0)
 
 	var kunai_ui = get_node_or_null("Camera2D/HUD/AnimatedSprite2D2")
 	if kunai_ui:
 		var view_size_2 = get_viewport_rect().size
 		var zoom_factor_2 = camera.zoom if camera else Vector2.ONE
 		var top_left_2 = Vector2(-view_size_2.x * 0.5 * zoom_factor_2.x, -view_size_2.y * 0.5 * zoom_factor_2.y)
-		kunai_ui.position = top_left_2 + Vector2(475.0, 78.0)
+		kunai_ui.position = top_left_2 + Vector2(470.0, 78.0)
 
 func _play_damage_flash() -> void:
 	if _damage_flash_tween:

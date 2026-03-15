@@ -1,9 +1,10 @@
 extends Node
 
-const FALLBACK_SCENE := "res://scenes/level_zero.tscn"
+const FALLBACK_SCENE := "res://scenes/level_zero_intro.tscn"
 const NON_GAMEPLAY_SCENES := {
 	"res://scenes/main_menu.tscn": true,
 	"res://scenes/GameOver.tscn": true,
+	"res://scenes/level_zero_intro.tscn": true,
 	"res://scenes/to_be_continued.tscn": true,
 }
 

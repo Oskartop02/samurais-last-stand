@@ -207,7 +207,7 @@ scale = Vector2(4.59131, 4.3112)
 texture = ExtResource("1_ackhi")
 
 [node name="PostacTestowa" parent="." instance=ExtResource("2_p5vbk")]
-position = Vector2(-4179, 1765)
+position = Vector2(3772, 1763)
 
 [node name="Dash" type="AudioStreamPlayer" parent="PostacTestowa"]
 stream = ExtResource("3_rvb5q")
