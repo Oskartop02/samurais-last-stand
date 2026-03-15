@@ -4,10 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://c5trqfsvvq7uw" path="res://animations/enemies/bolt.png" id="2_p5jbo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_or01j"]
-size = Vector2(67, 20)
+size = Vector2(75, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_swdg7"]
-size = Vector2(67, 20)
+size = Vector2(75, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nutxt"]
 atlas = ExtResource("2_p5jbo")

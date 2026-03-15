@@ -8,17 +8,20 @@ extends CharacterBody2D
 var direction: int = 1  # Kierunek strzały: 1 (w dół) lub -1 (w górę)
 var distance_travelled: float = 0
 var _arm_left: float = 0.0
+var launcher_rid: RID
 
 func _ready():
 	collision_layer = 0
 	collision_mask = 0
 	_arm_left = arm_time
+	if direction == 0:
+		direction = 1
 
 func _physics_process(delta):
 	var motion = Vector2(0, SPEED * direction) * delta
 
 	if _arm_left > 0.0:
-		position += motion
+		global_position += motion
 		distance_travelled += motion.length()
 		_arm_left -= delta
 		if distance_travelled > MAX_RANGE:
@@ -32,7 +35,7 @@ func _physics_process(delta):
 		_handle_hit(ray_hit)
 		return
 
-	position = to_pos
+	global_position = to_pos
 	
 	# Aktualizacja przebytej odległości
 	distance_travelled += motion.length()
@@ -57,7 +60,10 @@ func _raycast_hit(from_pos: Vector2, to_pos: Vector2) -> Node:
 	var space_state = get_world_2d().direct_space_state
 	var query = PhysicsRayQueryParameters2D.create(from_pos, to_pos)
 	query.collision_mask = 1
-	query.exclude = [get_rid()]
+	var excludes: Array = [get_rid()]
+	if launcher_rid.is_valid():
+		excludes.append(launcher_rid)
+	query.exclude = excludes
 	query.hit_from_inside = true
 	var result = space_state.intersect_ray(query)
 	if result.has("collider"):
